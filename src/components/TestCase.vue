@@ -1,21 +1,24 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+const { userModifiers, user } = defineProps({
+  user: String,
+  userModifiers: { default: () => ({}) }
+})
+const emit = defineEmits(['update:user'])
 
-const count = ref(0)
+function emitVal(e: Event) {
+  let val = (e.target as HTMLInputElement).value
+
+  // @ts-ignore
+  if (userModifiers.capitalize) {
+    val = val.charAt(0).toUpperCase() + val.slice(1)
+  }
+
+  emit('update:user', val)
+}
 </script>
 
 <template>
-  <div class="btn-wrapper">
-    <button
-      @click="
-        () => {
-          $emit('counterEvent', 10)
-        }
-      "
-    >
-      Do something cool
-    </button>
-  </div>
+  <input type="text" :value="user" @input="emitVal" />
 
-  <div>{{ count }}</div>
+  <p style="padding-top: 30px">We have {{ user }}</p>
 </template>
