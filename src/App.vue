@@ -1,18 +1,13 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import GreetUser from './components/GreetUser.vue'
 import TestCase from './components/TestCase.vue'
-const sayThis = {
-  user: 'KaunaJoe'
-}
-function runCount(n: number) {
-  window.alert(`Heyyyy we got ${n}`)
-}
+
+const userName = ref('metroe')
 </script>
 
 <template>
-  <GreetUser v-bind="sayThis" />
-
-  <TestCase @counter-event="runCount" />
+  <TestCase v-model:user.capitalize="userName" />
 </template>
 
 <style scoped></style>
