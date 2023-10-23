@@ -9,6 +9,7 @@
         <div style="margin-bottom: 8px; display: flex; flex-direction: column; gap: 4px">
           <label for="post_title">Post Title</label>
           <input
+            required
             type="text"
             name="post_title"
             v-model="createPostFormData.title"
@@ -19,6 +20,8 @@
         <div style="margin-bottom: 8px; display: flex; flex-direction: column; gap: 4px">
           <label for="post_body">Post Body</label>
           <input
+            ref="titleRef"
+            required
             type="text"
             name="post_body"
             v-model="createPostFormData.body"
@@ -84,7 +87,7 @@
 <script setup lang="ts">
 import axios from 'axios'
 import type { PostType } from '@/util/types'
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeMount } from 'vue'
 
 interface PostProp {
   title: string
@@ -96,6 +99,7 @@ interface PostReturnProp extends PostProp {
 }
 
 const posts = ref<PostType[]>([])
+const titleRef = ref(null)
 const createPostFormData = ref<PostProp>({
   title: '',
   body: '',
@@ -104,13 +108,23 @@ const createPostFormData = ref<PostProp>({
 const newPost = ref<PostReturnProp>()
 
 const getPosts = () => {
+  console.log('FIREDDDDDD')
   axios.get(`https://jsonplaceholder.typicode.com/posts`).then((res) => {
     posts.value = res.data
   })
 }
+
+onBeforeMount(() => {
+  console.log('we are hereeee!')
+})
+
+onMounted(() => {
+  getPosts()
+  if (titleRef.value) (titleRef.value as HTMLInputElement).focus()
+})
 const createPost = () => {
   axios
-    .post(`https://jsonplaceholder.typicode.com/posts`, createPostFormData, {
+    .post(`https://jsonplaceholder.typicode.com/posts`, createPostFormData.value, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'
