@@ -3,9 +3,7 @@ import PostList from './components/PostList.vue'
 </script>
 
 <template>
-  <div style="margin: 10vw">
-    <PostList />
-  </div>
+  <PostList />
 </template>
 
 <style scoped></style>
