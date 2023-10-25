@@ -108,7 +108,6 @@ const createPostFormData = ref<PostProp>({
 const newPost = ref<PostReturnProp>()
 
 const getPosts = () => {
-  console.log('FIREDDDDDD')
   axios.get(`https://jsonplaceholder.typicode.com/posts`).then((res) => {
     posts.value = res.data
   })
@@ -119,7 +118,6 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
-  getPosts()
   if (titleRef.value) (titleRef.value as HTMLInputElement).focus()
 })
 const createPost = () => {
