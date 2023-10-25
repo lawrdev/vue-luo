@@ -129,6 +129,7 @@ const createPost = () => {
       }
     })
     .then((res) => (newPost.value = res.data))
+    .catch((err) => console.log(err))
 }
 </script>
 
